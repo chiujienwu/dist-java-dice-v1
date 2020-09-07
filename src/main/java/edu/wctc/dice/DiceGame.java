@@ -1,7 +1,9 @@
 package edu.wctc.dice;
 
+import edu.wctc.dice.iface.DieRoller;
 import edu.wctc.dice.iface.GameInput;
 import edu.wctc.dice.iface.GameOutput;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,15 +16,17 @@ import java.util.Random;
 public class DiceGame {
     private GameInput in;
     private GameOutput out;
+    private DieRoller dice;
 
     private List<Player> players = new ArrayList<>();
     private int currentRound = 1;
 
 
     @Autowired
-    public DiceGame(GameInput in, GameOutput out) {
+    public DiceGame(GameInput in, GameOutput out, DieRoller dice) {
         this.in = in;
         this.out = out;
+        this.dice = dice;
         System.out.println("DiceGame created");
     }
 
@@ -113,14 +117,22 @@ public class DiceGame {
         out.output(report);
     }
 
+    private DieRoller die;
+
     private boolean rollDice() {
-        int die1 = rollDie();
-        int die2 = rollDie();
+        // Random random = new Random();
+        // int rand_sides = random.nextInt(20) + 1;
+        // out.output("\nNumber of sides of random dice: " + rand_sides);
+        // int die1 = rollDie(rand_sides);
+        // int die2 = rollDie(rand_sides);
+
+        int roll1 = dice.getRollValue();
+        int roll2 = dice.getRollValue();
 
         // Players win on even totals
-        boolean even = (die1 + die2) % 2 == 0;
+        boolean even = (roll1 + roll2) % 2 == 0;
 
-        String outcome = "Roll was " + die1 + ", " + die2;
+        String outcome = "Roll was " + roll1 + ", " + roll2;
 
         out.output(outcome + (even ? "\nPlayers WIN!" : "\nPlayers LOSE!"));
 
@@ -129,8 +141,10 @@ public class DiceGame {
         return even;
     }
 
+    // private int rollDie(int sides) {
     private int rollDie() {
         Random random = new Random();
+        // return random.nextInt(sides);
         return random.nextInt(6) + 1;
 //        return dieRoller.rollDie();
     }

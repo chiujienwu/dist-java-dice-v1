@@ -1,9 +1,12 @@
 package edu.wctc.dice;
 
 import edu.wctc.dice.iface.GameInput;
-import edu.wctc.dice.iface.GameOutput;
 import edu.wctc.dice.impl.PopupInput;
+import edu.wctc.dice.iface.GameOutput;
 import edu.wctc.dice.impl.PopupOutput;
+import edu.wctc.dice.iface.DieRoller;
+import edu.wctc.dice.impl.SixSidedDice;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,4 +25,10 @@ public class AppConfig {
 //        return new ConsoleInput();
         return new PopupInput();
     }
+
+    @Bean
+    public DieRoller getDieRoll() {
+        return new SixSidedDice();
+    }
+
 }
