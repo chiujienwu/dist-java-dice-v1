@@ -1,6 +1,7 @@
 package edu.wctc.dice;
 
 import edu.wctc.dice.iface.GameInput;
+import edu.wctc.dice.impl.EightSidedDice;
 import edu.wctc.dice.impl.PopupInput;
 import edu.wctc.dice.iface.GameOutput;
 import edu.wctc.dice.impl.PopupOutput;
@@ -28,7 +29,7 @@ public class AppConfig {
 
     @Bean
     public DieRoller getDieRoll() {
-        return new SixSidedDice();
+        return new EightSidedDice();
     }
 
 }
